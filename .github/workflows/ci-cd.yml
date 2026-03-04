@@ -39,7 +39,7 @@ jobs:
         working-directory: ./angular-app   # <-- dossier Angular
         run: |
           npm install
-          ng build --configuration production
+          npx ng build --configuration production
 
       # 5️⃣ Build Spring Boot
       - name: Build Spring Boot
