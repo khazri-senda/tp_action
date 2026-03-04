@@ -33,7 +33,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: '18'  # ou 20 si tu veux
-          cache: 'npm'
 
       # 4️⃣ Install Angular dependencies
       - name: Install Angular dependencies
