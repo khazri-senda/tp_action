@@ -1,23 +1,21 @@
+version: "3.9"
 services:
   angular-app:
     image: sendakhazrii/angular-app:latest
     ports:
-      - "0.0.0.0:4200:80"
+      - "4200:80"
 
   spring-boot-app:
     image: sendakhazrii/springboot-app:latest
     ports:
-      - "0.0.0.0:8081:8081"
+      - "8081:8081"
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/demo
-      - SPRING_DATASOURCE_USERNAME=root
-      - SPRING_DATASOURCE_PASSWORD=root
-      - spring.jpa.database-platform=org.hibernate.dialect.MySQL8Dialect
-      - SPRING_DATASOURCE_DRIVER_CLASS_NAME=com.mysql.cj.jdbc.Driver
-      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
-      - SPRING_MVC_CORS_MAPPING=/**
-      - SPRING_MVC_CORS_ALLOWED_METHODS=GET,POST,PUT,DELETE
-      - SPRING_MVC_CORS_ALLOWED_HEADERS=*
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/demo
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+      spring.jpa.database-platform: org.hibernate.dialect.MySQL8Dialect
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
     depends_on:
       - mysql
 
@@ -27,8 +25,10 @@ services:
     environment:
       MYSQL_DATABASE: demo
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
     ports:
-      - '0.0.0.0:3306:3306'
+      - "3306:3306"
     volumes:
       - demo:/var/lib/mysql
 
