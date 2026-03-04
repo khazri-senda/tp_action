@@ -55,4 +55,4 @@ jobs:
         run: docker ps
 
       - name: Show logs
-        run: docker-compose logs
+        run: docker compose -f docker-compose.yml logs
