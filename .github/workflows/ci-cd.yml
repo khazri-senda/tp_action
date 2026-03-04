@@ -12,49 +12,46 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    defaults:
-      run:
-        working-directory: ./  # Répertoire racine du repo
-
     steps:
-      # 1️⃣ Checkout du code
+      # 1️⃣ Checkout
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      # 2️⃣ Setup JDK pour Spring Boot
+      # 2️⃣ Setup Java
       - name: Set up JDK 17
         uses: actions/setup-java@v3
         with:
           distribution: temurin
           java-version: '17'
 
-      # 3️⃣ Setup Node.js pour Angular
+      # 3️⃣ Setup Node
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' 
+          node-version: '18'
 
-      # 4️⃣ Install Angular dependencies
+      # 4️⃣ Angular Build
       - name: Install Angular dependencies
-        working-directory: ./angular-app   # <-- dossier Angular
+        working-directory: ./angular-app
         run: |
           npm install
           npx ng build --configuration production
 
-      # 5️⃣ Build Spring Boot
+      # 5️⃣ Spring Boot Build
       - name: Build Spring Boot
-        working-directory: ./spring-backend  # <-- dossier Spring Boot
-        run: ./mvnw clean package -DskipTests
+        working-directory: ./springboot   # ✅ corrigé ici
+        run: mvn clean package -DskipTests
 
-      # 6️⃣ Docker Compose (si tu veux lancer containers)
+      # 6️⃣ Docker Compose
       - name: Build and run Docker Compose
         run: docker-compose -f docker-compose.yml up --build -d
 
-      # 7️⃣ Optional: Run tests (Angular + Spring Boot)
+      # 7️⃣ Tests Angular
       - name: Run Angular tests
         working-directory: ./angular-app
         run: npm test -- --watch=false --browsers=ChromeHeadless
 
+      # 8️⃣ Tests Spring
       - name: Run Spring Boot tests
-        working-directory: ./spring-backend
-        run: ./mvnw test
+        working-directory: ./springboot   # ✅ corrigé ici
+        run: mvn test
